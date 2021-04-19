@@ -14,6 +14,7 @@ public class Data
     public int touched_ball;
     //Rotation, intraction number, Interaction Type
     public Vector3 position;
+    public Quaternion quaternion;
     public int timestamp;
 
 
@@ -102,15 +103,20 @@ public class Activated : MonoBehaviour
         {
             Debug.Log("Answer List " + o);
         }
-        for (int i = 1; i <= 15; i++)
+
+        for (int i = 1; i <= 9; i++)
         {
             int rand = Random.Range(0, 16);
             rand = noCollideAngle(rand);
             var pos = RandomCircle(new Vector3(0, 0, 0), 0.5f, list_angle[rand]);
             var x = Mathf.Cos(list_angle[i]) * 1; 
             var z = Mathf.Sqrt(1 - Mathf.Pow(x, 2));
-            var position = new Vector3(0,0,0);
-            position = new Vector3(x, 0, z);
+
+
+
+            var rotation = new Quaternion(0, 0, 0, 0);
+            rotation = new Quaternion(x, 0, z, 0);
+
 
             //정답
             if (i == 1)
@@ -157,6 +163,7 @@ public class Activated : MonoBehaviour
             
             cube.SetActive(true);
             cube.transform.position = pos;
+            cube.transform.rotation = Quaternion.Euler(new Vector3(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360)));
             }
 
             //오답들
@@ -195,6 +202,7 @@ public class Activated : MonoBehaviour
             }
             cube.SetActive(true);
             cube.transform.position = pos;
+            cube.transform.rotation = Quaternion.Euler(new Vector3(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360)));
         }
 
         Vector3 RandomCircle(Vector3 center, float radius, float a)
